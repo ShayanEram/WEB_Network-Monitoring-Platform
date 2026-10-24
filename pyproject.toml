@@ -1,0 +1,22 @@
+[project]
+name = "network-monitor"
+version = "0.1.0"
+description = "Professional Full-Stack Network Monitor Platform"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.28.0",
+    "requests>=2.31.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"

@@ -1,0 +1,31 @@
+{
+    // Enable global format-on-save
+    "editor.formatOnSave": true,
+    // Run linters and fixers automatically when saving files
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    // JavaScript, CSS, & HTML Layout
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.experimental.useFlatConfig": true,
+    // Python Engine (Ruff combines styling + real-time bug catching)
+    "[python]": {
+        "editor.defaultFormatter": "astral-sh.ruff"
+    },
+    "ruff.lint.run": "onType",
+    // C Network Engine (Microsoft C++ handles syntax, formatting, and errors)
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.formatting": "clangFormat",
+    "C_Cpp.codeAnalysis.runAutomatic": true
+}

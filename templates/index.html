@@ -1,27 +1,23 @@
+<!-- index.html
+
+Main dashboard. 
+
+Header
+Statistics cards
+Protocol charts
+Device table
+Alert panel
+
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Secure Notes Vault</title>
+    <title>Network Monitor</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Secure Notes Vault</h1>
 
-        <form action="/add" method="POST">
-            <textarea name="note" placeholder="Write your note here..." required></textarea>
-            <button type="submit">Save Note</button>
-        </form>
-
-        <h2>🗒️ Your Notes</h2>
-        <ul class="notes-list">
-            {% for note in notes %}
-                <li>{{ note.content }}</li>
-            {% else %}
-                <li>No notes yet. Start writing!</li>
-            {% endfor %}
-        </ul>
-    </div>
 </body>
 </html>

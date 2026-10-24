@@ -1,0 +1,15 @@
+BasedOnStyle: Chromium
+Language: Cpp
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: Never
+BreakBeforeBraces: Attach
+ColumnLimit: 100
+IndentWidth: 4
+PointerAlignment: Left
+Standard: Latest
+TabWidth: 4
+UseTab: Never

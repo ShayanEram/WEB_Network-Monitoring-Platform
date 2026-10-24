@@ -1,0 +1,54 @@
+repos:
+  # ===========================================================================
+  # 1. PYTHON STACK (Ruff - Formatter & Linter combined)
+  # ===========================================================================
+  - repo: https://github.com
+    rev: v0.9.0
+    hooks:
+      - id: ruff
+        name: Python Linter (Ruff)
+        files: ^(app\.py|config\.py|api/|models/)
+        args: [ --fix ] # Automatically fixes safe issues like unused imports
+      - id: ruff-format
+        name: Python Formatter (Ruff)
+        files: ^(app\.py|config\.py|api/|models/)
+
+  # ===========================================================================
+  # 2. JAVASCRIPT STACK (ESLint & Prettier)
+  # ===========================================================================
+  - repo: https://github.com
+    rev: v9.9.0 # Industry stable version
+    hooks:
+      - id: eslint
+        name: JavaScript Linter (ESLint)
+        files: ^static/js/
+        additional_dependencies:
+          - eslint@9.9.0
+          - globals@15.9.0
+  - repo: https://github.com
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        name: Web Formatter (Prettier)
+        files: ^(static/)
+        types_or: [javascript, css]
+
+  # ===========================================================================
+  # 3. C STACK (Clang-Tidy & Clang-Format)
+  # ===========================================================================
+  - repo: https://github.com
+    rev: v18.1.8
+    hooks:
+      - id: clang-format
+        name: C Formatter (Clang-Format)
+        files: ^network_engine/
+        types_or: [c]
+  - repo: local
+    hooks:
+      - id: clang-tidy
+        name: C Linter (Clang-Tidy)
+        entry: clang-tidy
+        language: system
+        files: ^network_engine/.*\.c$
+        args: ["-checks=*,-llvm-header-guard", "--"]
+

@@ -1,0 +1,63 @@
+name: Code Quality & Build Gate
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  quality-gate:
+    name: Lint, Format & Build Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the project code base
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Set up the lightning-fast Rust-based Python manager (uv)
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          enable-cache: true
+
+      # 3. Pin Python environment based on your pyproject.toml
+      - name: Set up Python
+        run: uv python install
+
+      # 4. Check Python Formatting & Syntax Bugs (Ruff is extremely fast)
+      - name: Run Python Lint & Format Checks
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      # 5. Install Node.js to evaluate your Web stack
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 6. Check JavaScript / CSS Layout & Logic (ESLint + Prettier)
+      - name: Run Web Lint & Format Checks
+        run: |
+          npx eslint static/js/
+          npx prettier --check static/
+
+      # 7. Check C Engine Formatting Rules
+      - name: Run C Code Style Verification
+        uses: jidicula/clang-format-action@v4.11.0
+        with:
+          clang-format-version: '18'
+          check-path: 'network_engine'
+
+      # 8. Compile the C Engine to guarantee it actually builds without errors
+      - name: Verify C Binary Compilation Build
+        run: |
+          cd network_engine
+          if [ -f Makefile ]; then
+            make
+          else
+            gcc -Wall -Wextra packet_sniffer.c -o packet_sniffer
+          fi
