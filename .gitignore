@@ -1,0 +1,85 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+.venv/
+venv/
+env/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+
+# =========================
+# Node.js
+# =========================
+node_modules/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# C Build Artifacts
+# =========================
+*.o
+*.obj
+*.exe
+*.out
+*.so
+*.dll
+*.a
+*.lib
+
+# network_engine builds
+network_engine/build/
+network_engine/bin/
+
+# =========================
+# IDE / Editors
+# =========================
+.idea/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Coverage
+# =========================
+.coverage
+htmlcov/
+
+# =========================
+# Temporary Files
+# =========================
+tmp/
+temp/
+
+# =========================
+# Keep lock files
+# =========================
+!package-lock.json
+!uv.lock

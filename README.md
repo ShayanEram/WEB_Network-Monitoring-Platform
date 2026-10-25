@@ -65,10 +65,49 @@ pip install uv --break-system-packages
 
 On Windows (using PowerShell / winget):
 ```powershell
-winget install astral-sh.uv
-winget install LLVM.LLVM
-pip install pre-commit
+# 1. Install all global package managers, engines, and toolchains silently
+winget install astral-sh.uv --silent --accept-source-agreements
+winget install LLVM.LLVM --silent --accept-source-agreements
+winget install zig.zig --silent --accept-source-agreements
+winget install OpenJS.NodeJS.LTS --silent --accept-source-agreements
+
+# 2. Refresh the environment PATH immediately so your terminal sees the new tools
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# 3. Use 'uv' to cleanly isolate and install pre-commit globally
+uv tool install pre-commit --python 3.13
+
+
 ```
+---
+# Installs package managers, C engines, and Node.js runtimes natively
+winget install astral-sh.uv --silent --accept-source-agreements
+winget install LLVM.LLVM --silent --accept-source-agreements
+winget install zig.zig --silent --accept-source-agreements
+winget install OpenJS.NodeJS.LTS --silent --accept-source-agreements
+
+# Refreshes the terminal environment paths immediately
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+# Creates a clean local isolated Python environment
+uv venv
+
+# Automatically handles, synchronizes, and locks your Python dependencies
+uv sync
+
+# Natively creates a perfectly encoded UTF-8 package.json to house web rules
+node -e "fs.writeFileSync('package.json', JSON.stringify({ name: 'web-network-monitoring-platform', private: true, devDependencies: { eslint: '^9.0.0', prettier: '^3.0.0' } }, null, 2))"
+
+# Downloads local ESLint and Prettier dependencies into node_modules/
+npm install
+
+# Bypasses Python 3.15 compilation locks to bind your automated Git hooks framework safely via Python 3.13
+uvx --python 3.13 pre-commit install
+
+
+---
 
 2. Initialize Python Isolation Workspace
 
@@ -79,6 +118,22 @@ bash
 
 #### Synchronize and install project requirements mapped in pyproject.toml
 `uv sync`
+
+# 1. Create a pristine local virtual environment (.venv)
+uv venv
+
+# 2. Synchronize and lock your Python ecosystem mapping
+uv sync
+
+# 3. Download local ESLint and Prettier modules for the Web stack
+npm install
+
+# 4. Bind the entire test & formatting ecosystem to your Git hooks
+uv run pre-commit install
+
+# 5. Run a complete system verification check across the directory
+uv run pre-commit run --all-files
+
 
 
 3. Connect Pre-Commit to Git Lifecycle
@@ -130,3 +185,24 @@ Every branch change pushed up to the cloud mirrors an ecosystem build inside Git
 - Runs static analyzers to screen for security holes.
 - Runs your localized compiler setup to ensure your engine compiles cleanly without breaks.
 Now that the README matches your layout perfectly, would you like me to walk through how to build out your actual packet_sniffer.c file or connect it to your Python routes?
+
+---
+Remove-Item -Recurse -Force .venv, node_modules, package.json, package-lock.json
+# Natively uninstall all globally added toolchains and managers
+winget uninstall astral-sh.uv --silent
+winget uninstall LLVM.LLVM --silent
+winget uninstall zig.zig --silent
+winget uninstall OpenJS.NodeJS.LTS --silent
+# 1. Clear out all isolated uv tools and cached runtimes
+Remove-Item -Recurse -Force "$env:USERPROFILE\.uv"
+Remove-Item -Recurse -Force "$env:LOCALAPPDATA\uv"
+
+# 2. Clear out any cached pre-commit configuration blocks
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\pre-commit"
+
+# 3. Clear npm cache records
+Remove-Item -Recurse -Force "$env:APPDATA\npm-cache"
+
+# 4. Revert script security back to the default safe Windows state (Undefined)
+Set-ExecutionPolicy Undefined -Scope CurrentUser -Force
+

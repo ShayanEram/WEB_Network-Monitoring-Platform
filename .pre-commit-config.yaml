@@ -2,7 +2,7 @@ repos:
   # ===========================================================================
   # 1. PYTHON STACK (Ruff - Formatter & Linter combined)
   # ===========================================================================
-  - repo: https://github.com
+  - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.9.0
     hooks:
       - id: ruff
@@ -16,7 +16,7 @@ repos:
   # ===========================================================================
   # 2. JAVASCRIPT STACK (ESLint & Prettier)
   # ===========================================================================
-  - repo: https://github.com
+  - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v9.9.0 # Industry stable version
     hooks:
       - id: eslint
@@ -25,7 +25,7 @@ repos:
         additional_dependencies:
           - eslint@9.9.0
           - globals@15.9.0
-  - repo: https://github.com
+  - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.1.0
     hooks:
       - id: prettier
@@ -36,7 +36,7 @@ repos:
   # ===========================================================================
   # 3. C STACK (Clang-Tidy & Clang-Format)
   # ===========================================================================
-  - repo: https://github.com
+  - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v18.1.8
     hooks:
       - id: clang-format
