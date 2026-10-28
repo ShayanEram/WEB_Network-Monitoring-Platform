@@ -5,7 +5,7 @@ AlignAfterOpenBracket: Align
 AllowShortBlocksOnASingleLine: Never
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
-AllowShortLoopsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
 BreakBeforeBraces: Attach
 ColumnLimit: 100
 IndentWidth: 4

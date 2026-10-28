@@ -1,20 +1,16 @@
-/*
-packet_sniffer.c
+#include "packet_sniffer.h"
 
-This is your most important C file.
-
-Responsibilities:
-
-Capture packets
-Extract metadata
-Output packet information
-
-Example packet data:
-{
-  "src_ip":"192.168.1.10",
-  "dst_ip":"8.8.8.8",
-  "protocol":"TCP",
-  "size":512
+// Functions----------------------------------------------
+void start_capture(void) {
+    /* Capture packets */
 }
 
-*/
+void process_packet(void) {
+    /* Extract data */
+}
+
+// Main----------------------------------------------------
+int main(void) {
+    start_capture();
+    return 0;
+}

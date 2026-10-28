@@ -1,11 +1,12 @@
-# Maps Python objects to SQL rows.
+class Device:
+    def __init__(self):
+        pass
 
-from flask_sqlalchemy import SQLAlchemy
+    def get_all_devices(self):
+        pass
 
-class Device(db.Model):
-    __tablename__ = "devices"
+    def add_device(self, ip, hostname):
+        pass
 
-    id = db.Column(db.Integer,
-                   primary_key=True)
-
-    ip_address = db.Column(db.String(45))
+    def update_last_seen(self, ip):
+        pass

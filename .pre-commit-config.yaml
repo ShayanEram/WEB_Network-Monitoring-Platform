@@ -47,8 +47,8 @@ repos:
     hooks:
       - id: clang-tidy
         name: C Linter (Clang-Tidy)
-        entry: clang-tidy
+        entry: C:/Progra~1/LLVM/bin/clang-tidy.exe
         language: system
         files: ^network_engine/.*\.c$
-        args: ["-checks=*,-llvm-header-guard", "--"]
+        args: ["-checks=*,-llvm-header-guard"]
 

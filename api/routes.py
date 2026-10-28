@@ -1,8 +1,18 @@
-'''routes.py
+from flask import Blueprint, jsonify
 
-Contains REST endpoints.
-'''
+api = Blueprint("api", __name__)
+
 
 @api.route("/api/stats")
 def stats():
-    return jsonify({...})
+    return jsonify({})
+
+
+@api.route("/api/devices")
+def devices():
+    return jsonify([])
+
+
+@api.route("/api/protocols")
+def protocols():
+    return jsonify({})

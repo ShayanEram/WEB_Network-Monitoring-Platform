@@ -1,23 +1,44 @@
-<!-- index.html
-
-Main dashboard. 
-
-Header
-Statistics cards
-Protocol charts
-Device table
-Alert panel
-
--->
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<!-- File heading ---------------------------------------------------------------->
 <head>
-    <meta charset="UTF-8">
     <title>Network Monitor</title>
-    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+<!-- Body -------------------------------------------------------------------------->
 <body>
+
+<header>
+    <h1>Network Monitor</h1>
+</header>
+
+<main>
+
+    <section id="stats">
+        <!-- Cards -->
+    </section>
+
+    <section id="protocol-chart">
+        <!-- Pie Chart -->
+    </section>
+
+    <section id="traffic-chart">
+        <!-- Line Chart -->
+    </section>
+
+    <section id="devices">
+        <!-- Table -->
+    </section>
+
+    <section id="alerts">
+        <!-- Alert Feed -->
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 </body>
 </html>

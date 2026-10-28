@@ -1,79 +1,15 @@
-/* style.css
-
-Entire application's styling. 
-
-Dashboard Layout
-Cards
-Tables
-Charts
-Alerts
-Login Page
-Dark Theme
-*/
-
+:root {
+  --background: #0f172a;
+  --card: #1e293b;
+  --text: #ffffff;
+  --accent: #38bdf8;
+}
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f8;
-    margin: 0;
-    padding: 0;
+  background: var(--background);
+  color: var(--text);
 }
 
-.container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-h1, h2 {
-    text-align: center;
-    color: #333;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-button {
-    background-color: #0078D4;
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #005fa3;
-}
-
-.notes-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.notes-list li {
-    background-color: #eef2f5;
-    margin-bottom: 10px;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 15px;
-    color: #444;
+.card {
+  background: var(--card);
 }

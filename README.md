@@ -80,6 +80,7 @@ uv tool install pre-commit --python 3.13
 
 ```
 ---
+```bash
 # Installs package managers, C engines, and Node.js runtimes natively
 winget install astral-sh.uv --silent --accept-source-agreements
 winget install LLVM.LLVM --silent --accept-source-agreements
@@ -106,6 +107,8 @@ npm install
 # Bypasses Python 3.15 compilation locks to bind your automated Git hooks framework safely via Python 3.13
 uvx --python 3.13 pre-commit install
 
+uvx --python 3.13 pre-commit run --all-files
+```
 
 ---
 

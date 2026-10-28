@@ -1,21 +1,21 @@
-// dashboard.js
-
-// Frontend behavior.
-
-// Responsibilities:
-
-// Call APIs
-// Update charts
-// Refresh data
-// Show alerts
-
 async function loadStats() {
-    const response =
-        await fetch("/api/stats");
-
-    const stats =
-        await response.json();
-
-    cpuCard.textContent =
-        stats.cpu_usage;
+  // Fetch stats
 }
+
+async function loadDevices() {
+  // Fetch devices
+}
+
+async function loadProtocols() {
+  // Fetch chart data
+}
+
+function refreshDashboard() {
+  loadStats();
+  loadDevices();
+  loadProtocols();
+}
+
+refreshDashboard();
+
+setInterval(refreshDashboard, 5000);

@@ -1,8 +1,15 @@
-# Stores packet information.
+class TrafficLog:
+    def __init__(self):
+        pass
 
-class TrafficLog(db.Model):
-    __tablename__ = "traffic_logs"
+    def insert_packet(packet):
+        pass
 
-    source_ip = db.Column(db.String(45))
-    destination_ip = db.Column(db.String(45))
-    protocol = db.Column(db.String(20))
+    def get_protocol_counts():
+        pass
+
+    def get_packet_total():
+        pass
+
+    def get_top_talkers():
+        pass
