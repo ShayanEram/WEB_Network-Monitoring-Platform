@@ -209,3 +209,7 @@ Remove-Item -Recurse -Force "$env:APPDATA\npm-cache"
 # 4. Revert script security back to the default safe Windows state (Undefined)
 Set-ExecutionPolicy Undefined -Scope CurrentUser -Force
 
+
+# Run
+`uv run python app.py` 
+
