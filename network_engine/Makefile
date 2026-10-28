@@ -1,5 +1,6 @@
-build:
-    gcc packet_sniffer.c -o packet_sniffer -lpcap
+# network_engine/Makefile
 
-clean:
-	rm -f packet_sniffer
+all: packet_sniffer
+
+packet_sniffer: packet_sniffer.c
+	zig cc packet_sniffer.c -o packet_sniffer

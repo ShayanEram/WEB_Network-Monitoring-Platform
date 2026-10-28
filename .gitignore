@@ -42,6 +42,7 @@ yarn-error.log*
 *.dll
 *.a
 *.lib
+*.pdb
 
 # network_engine builds
 network_engine/build/
