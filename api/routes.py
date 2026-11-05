@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 
+from models.alert import AlertLog
 from models.device import DeviceLog
 from models.traffic import TrafficLog
-from models.alert import AlertLog
 
 api = Blueprint("api", __name__)
 

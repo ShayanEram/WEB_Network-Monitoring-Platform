@@ -1,10 +1,11 @@
-from flask import Flask, render_template
-from api.routes import api
-import config
 import threading
 
-from models.alert import AlertLog
+from flask import Flask, render_template
+
+import config
+from api.routes import api
 from database.databaseHelper import init_db
+from models.alert import AlertLog
 from network_engine.engine_runner import compile_c_engine, listen_to_network_engine
 
 # Flask Init-----------------------------------------------------------------------------

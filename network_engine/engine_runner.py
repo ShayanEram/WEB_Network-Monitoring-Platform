@@ -1,9 +1,11 @@
 import os
-import sys
 import subprocess
+import sys
+
 import config
-from models.traffic import TrafficLog
 from models.device import DeviceLog
+from models.traffic import TrafficLog
+
 
 def compile_c_engine():
     print("Compiling C network engine using Zig...")
@@ -32,6 +34,7 @@ def compile_c_engine():
         )
         sys.exit(1)
 
+
 def listen_to_network_engine():
     c_executable = config.EXE_PATH
 
@@ -55,9 +58,13 @@ def listen_to_network_engine():
                 TrafficLog.insert_packet(source_ip, dest_ip, int(size), protocol)
 
                 # 2. Automatically register/update source device in devices table
-                DeviceLog.add_device(source_ip, hostname=f"Device-{source_ip.split('.')[-1]}")
+                DeviceLog.add_device(
+                    source_ip, hostname=f"Device-{source_ip.split('.')[-1]}"
+                )
 
                 print(f"Logged packet from C: {source_ip} -> {dest_ip}")
 
     except FileNotFoundError:
-        print(f"C engine binary not found at {c_executable}. Make sure to compile it first!")
+        print(
+            f"C engine binary not found at {c_executable}. Make sure to compile it first!"
+        )
