@@ -1,7 +1,13 @@
-# Network-monitor
+# Network Monitoring Platform
+
+A lightweight, real-time network monitoring platform featuring a high-performance C packet capture engine compiled via Zig, a Python Flask API backend with SQLite storage, and a minimalist light-mode frontend written in modular ES6 JavaScript.
+
+---
+
+## Project Structure
 
 ```text
-Network-monitor/
+WEB_Network-Monitoring-Platform/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
@@ -10,206 +16,180 @@ Network-monitor/
 ├── api/
 │   └── routes.py
 ├── database/
+│   ├── databaseHelper.py
 │   └── schema.sql
 ├── models/
+│   ├── alert.py
 │   ├── device.py
 │   └── traffic.py
 ├── network_engine/
-│   ├── Makefile
-│   └── packet_sniffer.c
+│   ├── engine_runner.py
+│   ├── packet_sniffer.c
+│   └── packet_sniffer.h
 ├── static/
 │   ├── css/
-│   │   └── style.css
+│   │   ├── about.css
+│   │   ├── alerts.css
+│   │   ├── base.css
+│   │   ├── devices.css
+│   │   ├── index.css
+│   │   └── traffic.css
 │   └── js/
-│       └── dashboard.js
+│       ├── alerts.js
+│       ├── devices.js
+│       ├── index.js
+│       └── traffic.js
 ├── templates/
+│   ├── about.html
+│   ├── alerts.html
+│   ├── base.html
+│   ├── devices.html
 │   ├── index.html
-│   └── login.html
+│   └── traffic.html
 ├── .clang-format
-├── .eslint.config.js
+├── eslint.config.js
 ├── .pre-commit-config.yaml
 ├── .prettierrc
 ├── app.py
 ├── config.py
+├── package.json
 ├── pyproject.toml
 └── uv.lock
 ```
 
-## Environment Setup & Tooling Pipeline
+---
 
-This repository implements industry-standard automation tools for linting, formatting, environment isolation, and automated verification rules.
-• Package Management: uv (Rust-based ultra-fast virtualenv manager)
-• Python Stack: Ruff (Unified PEP 8 linter and formatter running at lightspeed)
-• Web Stack: ESLint (Logic guardrails) + Prettier (Layout adjustments)
-• C Core Engine: Clang-Tidy (Static bug analysis) + Clang-Format (Chromium code style layout)
+## Tech Stack & Tooling Pipeline
 
-## First-Time Installation
+- **Backend:** Python 3.13+, Flask, SQLite
+- **Network Engine:** C language compiled via `zig cc` for cross-platform compatibility
+- **Frontend:** Modular HTML5, CSS3, OOP ES6 JavaScript (Classes), Chart.js
+- **Package Management:** `uv` (Fast Rust-based Python package manager)
+- **Code Quality & Verification:**
+  - **Python:** Ruff (Linter and Formatter)
+  - **Web Stack:** ESLint v9+ & Prettier
+  - **C Engine:** Clang-Format & Clang-Tidy
 
-Follow these steps to establish your workspace dependencies and activate git hooks.
+---
 
-1. Install Global Core Binaries
+## First-Time Setup & Installation
 
-Install the project manager (uv), the git hooks container (pre-commit), and the localized C toolchains on your platform:
+### 1. Install Toolchain Dependencies
 
-On macOS (using Homebrew):
-```bash
-brew install uv pre-commit llvm
+#### On Windows (PowerShell):
+```powershell
+# Install core package managers, runtimes, and compilers
+winget install astral-sh.uv --silent --accept-source-agreements
+winget install LLVM.LLVM --silent --accept-source-agreements
+winget install zig.zig --silent --accept-source-agreements
+winget install OpenJS.NodeJS.LTS --silent --accept-source-agreements
+
+# Refresh environment PATH variables
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# Allow execution of local scripts for workspace setup
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 ```
 
-On Linux (Ubuntu/Debian):
+#### On macOS:
+```bash
+brew install uv pre-commit llvm zig node
+```
+
+#### On Linux (Ubuntu/Debian):
 ```bash
 sudo apt update
-sudo apt install python3-pip pre-commit clang-format clang-tidy
+sudo apt install python3-pip pre-commit clang-format clang-tidy zig nodejs npm
 pip install uv --break-system-packages
 ```
 
-On Windows (using PowerShell / winget):
-```powershell
-# 1. Install all global package managers, engines, and toolchains silently
-winget install astral-sh.uv --silent --accept-source-agreements
-winget install LLVM.LLVM --silent --accept-source-agreements
-winget install zig.zig --silent --accept-source-agreements
-winget install OpenJS.NodeJS.LTS --silent --accept-source-agreements
-
-# 2. Refresh the environment PATH immediately so your terminal sees the new tools
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-# 3. Use 'uv' to cleanly isolate and install pre-commit globally
-uv tool install pre-commit --python 3.13
-
-
-```
 ---
+
+### 2. Initialize Workspace Dependencies
+
+In the project root directory, run:
+
 ```bash
-# Installs package managers, C engines, and Node.js runtimes natively
-winget install astral-sh.uv --silent --accept-source-agreements
-winget install LLVM.LLVM --silent --accept-source-agreements
-winget install zig.zig --silent --accept-source-agreements
-winget install OpenJS.NodeJS.LTS --silent --accept-source-agreements
-
-# Refreshes the terminal environment paths immediately
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-
-# Creates a clean local isolated Python environment
+# 1. Create a virtual environment
 uv venv
 
-# Automatically handles, synchronizes, and locks your Python dependencies
+# 2. Synchronize Python dependencies
 uv sync
 
-# Natively creates a perfectly encoded UTF-8 package.json to house web rules
-node -e "fs.writeFileSync('package.json', JSON.stringify({ name: 'web-network-monitoring-platform', private: true, devDependencies: { eslint: '^9.0.0', prettier: '^3.0.0' } }, null, 2))"
-
-# Downloads local ESLint and Prettier dependencies into node_modules/
+# 3. Install JavaScript linting/formatting dependencies
 npm install
 
-# Bypasses Python 3.15 compilation locks to bind your automated Git hooks framework safely via Python 3.13
-uvx --python 3.13 pre-commit install
-
-uvx --python 3.13 pre-commit run --all-files
-```
-
----
-
-2. Initialize Python Isolation Workspace
-
-Run these commands in the root directory (Network-monitor/) to establish dependencies inside your locked workspace:
-bash
-#### Set up a pristine local virtual environment (.venv)
-`uv venv`
-
-#### Synchronize and install project requirements mapped in pyproject.toml
-`uv sync`
-
-# 1. Create a pristine local virtual environment (.venv)
-uv venv
-
-# 2. Synchronize and lock your Python ecosystem mapping
-uv sync
-
-# 3. Download local ESLint and Prettier modules for the Web stack
-npm install
-
-# 4. Bind the entire test & formatting ecosystem to your Git hooks
+# 4. Install Git pre-commit hooks
 uv run pre-commit install
-
-# 5. Run a complete system verification check across the directory
-uv run pre-commit run --all-files
-
-
-
-3. Connect Pre-Commit to Git Lifecycle
-
-Link your formatting and linting pipelines to check code modifications before they register on your timeline:
-bash
-`pre-commit install`
-
-Verification output: pre-commit installed at .git/hooks/pre-commit
-
-## Usage Protocol
-
-### Automatic Verification (On Local Commit)
-
-Work normally with git commands. Rules run automatically to catch errors before code leaves your computer:
-1. Stage changes: git add .
-2. Attempt a save checkpoint: git commit -m "feat: analyze live icmp packets"
-3. The automated test container runs tests sequentially.
-	• If a structural rule fails, your file layout changes are modified automatically, and the commit pauses.
-	• Simply check changes (git status), restage adjustments (git add .), and commit again.
-
-### Manual Inspections (Entire Directory Execution)
-
-If you want to clear styling inconsistencies across the full repository workspace tree at any point, run:
-bash
-`pre-commit run --all-files`
-
-
-### Changing Third-Party Python Packs
-
-Do not manually type dependencies into configuration tables. To add libraries securely with locked tracking metrics, use:
-```bash
-uv add name-of-package
 ```
 
+---
 
-## Integrated Editor Environment
+## Running the Application
 
-Workspace variables are tracked in .vscode/settings.json. If you use Visual Studio Code, ensure you have the following marketplace extensions activated:
-- Ruff (by Astral) — Real-time syntax errors and automated import organization.
-- ESLint (by Microsoft) — Displays interface logical exceptions during script creation.
-- Prettier (by Prettier) — Auto-formats layout patterns for web pages.
-- C/C++ Extension Pack (by Microsoft) — Activates low-level evaluation tracking.
+To compile the C packet sniffer, initialize the database schema, start the daemon listener thread, and launch the Flask server, run:
 
-## Continuous Integration (CI Gate)
+```bash
+uv run python app.py
+```
 
-Every branch change pushed up to the cloud mirrors an ecosystem build inside GitHub Actions pipelines (.github/workflows/ci.yml). This build runner checks environment validation routines even if local hooks were skipped:
-- Ensures code layout validation tests successfully clear formatting passes.
-- Runs static analyzers to screen for security holes.
-- Runs your localized compiler setup to ensure your engine compiles cleanly without breaks.
-Now that the README matches your layout perfectly, would you like me to walk through how to build out your actual packet_sniffer.c file or connect it to your Python routes?
+Open your browser and navigate to: `http://127.0.0.1:5000`
 
 ---
-Remove-Item -Recurse -Force .venv, node_modules, package.json, package-lock.json
-# Natively uninstall all globally added toolchains and managers
+
+## Development & Maintenance Commands
+
+### Code Quality Verification
+
+To run manual linting and formatting across the entire workspace:
+
+```bash
+# Run all pre-commit hooks manually
+uv run pre-commit run --all-files
+```
+
+### Adding New Python Packages
+
+To add new third-party dependencies with locked tracking:
+
+```bash
+uv add <package-name>
+```
+
+---
+
+## Environment Cleanup / Teardown
+
+If you need to reset the virtual environment, node modules, or local tool caches completely, run the following scripts.
+
+#### Reset Local Workspace Files:
+```powershell
+Remove-Item -Recurse -Force .venv, node_modules, package-lock.json
+```
+
+#### Full Toolchain Teardown (Windows PowerShell):
+```powershell
+# Uninstall globally installed Winget packages
 winget uninstall astral-sh.uv --silent
 winget uninstall LLVM.LLVM --silent
 winget uninstall zig.zig --silent
 winget uninstall OpenJS.NodeJS.LTS --silent
-# 1. Clear out all isolated uv tools and cached runtimes
-Remove-Item -Recurse -Force "$env:USERPROFILE\.uv"
-Remove-Item -Recurse -Force "$env:LOCALAPPDATA\uv"
 
-# 2. Clear out any cached pre-commit configuration blocks
-Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\pre-commit"
+# Remove cached directories
+Remove-Item -Recurse -Force "$env:USERPROFILE\.uv" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:LOCALAPPDATA\uv" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\pre-commit" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:APPDATA\npm-cache" -ErrorAction SilentlyContinue
 
-# 3. Clear npm cache records
-Remove-Item -Recurse -Force "$env:APPDATA\npm-cache"
-
-# 4. Revert script security back to the default safe Windows state (Undefined)
+# Revert script execution policy back to default
 Set-ExecutionPolicy Undefined -Scope CurrentUser -Force
+```
 
+---
 
-# Run
-`uv run python app.py` 
+## Continuous Integration
 
+All branch commits and pull requests trigger automated GitHub Actions workflows (`.github/workflows/ci.yml`). The runner executes:
+1. Python code formatting checks (Ruff)
+2. ESLint & Prettier validations
+3. Cross-platform C engine compilation tests
