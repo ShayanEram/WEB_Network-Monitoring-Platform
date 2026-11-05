@@ -7,11 +7,9 @@ repos:
     hooks:
       - id: ruff
         name: Python Linter (Ruff)
-        files: ^(app\.py|config\.py|api/|models/)
         args: [ --fix ] # Automatically fixes safe issues like unused imports
       - id: ruff-format
         name: Python Formatter (Ruff)
-        files: ^(app\.py|config\.py|api/|models/)
 
   # ===========================================================================
   # 2. JAVASCRIPT STACK (ESLint & Prettier)

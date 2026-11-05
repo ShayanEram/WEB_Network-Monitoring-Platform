@@ -34,7 +34,6 @@ def init_db():
 
 
 def show_db():
-
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     db_path = os.path.join(base_dir, config.DATABASE_PATH)
 
