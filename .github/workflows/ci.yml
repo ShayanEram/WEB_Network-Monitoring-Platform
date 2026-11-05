@@ -1,88 +1,46 @@
-name: Code Quality & Build Gate
+name: Publish Docker Image
 
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  release:
+    types: [ published ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  quality-gate:
-    name: Lint, Format & Build Verification
+  build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      # 1. Check out the project code base
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Set up the lightning-fast Rust-based Python manager (uv)
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+      - name: Log in to the Container Registry
+        uses: docker/login-action@v3
         with:
-          version: "latest"
-          enable-cache: true
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Pin Python environment based on pyproject.toml
-      - name: Set up Python
-        run: uv python install
-
-      # 4. Synchronize Python dependencies
-      - name: Install Python Dependencies
-        run: uv sync
-
-      # 5. Check Python Formatting & Syntax (Ruff)
-      - name: Run Python Lint & Format Checks
-        run: |
-          uv run ruff check .
-          uv run ruff format --check .
-
-      # 6. Install Node.js for Web stack validation
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          node-version: 20
-          cache: 'npm'
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,format=short
 
-      # 7. Install Frontend Linting & Formatting Dependencies
-      - name: Install Node Dependencies
-        run: |
-          if [ -f package.json ]; then
-            npm ci || npm install
-          else
-            npm install -D eslint prettier globals
-          fi
-
-      # 8. Check JavaScript / CSS Layout & Logic (ESLint + Prettier)
-      - name: Run Web Lint & Format Checks
-        run: |
-          npx eslint static/js/
-          npx prettier --check "static/**/*.{css,js}"
-
-      # 9. Set up Zig Toolchain for C Compilation
-      - name: Set up Zig
-        uses: mlugg/setup-zig@v1
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
         with:
-          version: 0.13.0
-
-      # 10. Check C Engine Formatting Rules
-      - name: Run C Code Style Verification
-        uses: jidicula/clang-format-action@v4.11.0
-        with:
-          clang-format-version: '18'
-          check-path: 'network_engine'
-
-      # 11. Compile the C Engine using Zig (matching engine_runner.py)
-      - name: Verify C Binary Compilation Build
-        run: |
-          cd network_engine
-          if command -v zig &> /dev/null; then
-            echo "Building packet sniffer with Zig..."
-            zig cc packet_sniffer.c -o packet_sniffer
-          elif [ -f Makefile ]; then
-            echo "Building packet sniffer with Makefile..."
-            make
-          else
-            echo "Building packet sniffer with GCC..."
-            gcc -Wall -Wextra packet_sniffer.c -o packet_sniffer
-          fi
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

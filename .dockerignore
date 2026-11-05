@@ -1,0 +1,8 @@
+.venv/
+node_modules/
+.git/
+.github/
+__pycache__/
+*.pyc
+*.db
+.pre-commit-config.yaml
