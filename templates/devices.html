@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+
+<!-- Title ----------------------------------------------------------------------->
+{% block title %}Devices - Network Monitor{% endblock %}
+
+<!-- Header ---------------------------------------------------------------------->
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/devices.css') }}">
+{% endblock %}
+
+<!-- Body ------------------------------------------------------------------------>
+{% block content_body %}
+
+<div class="page-header">
+    <div class="header-title">
+        <h1>Connected Devices</h1>
+        <p class="subtitle">Monitor and inspect active endpoints discovered across your network.</p>
+    </div>
+    <div class="header-actions">
+        <button id="refresh-devices-btn" class="btn btn-secondary">Refresh List</button>
+    </div>
+</div>
+
+<!-- Search & Filter Toolbar -->
+<div class="toolbar">
+    <div class="search-wrapper">
+        <input type="text" id="device-search" placeholder="Search by IP, hostname, or MAC address..." autocomplete="off">
+    </div>
+    <div class="filter-wrapper">
+        <select id="status-filter" class="form-select">
+            <option value="all">All Devices</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+        </select>
+    </div>
+</div>
+
+<!-- Master Data Table -->
+<div class="table-card">
+    <table class="data-table" id="devices-table">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>IP Address</th>
+                <th>Hostname / Vendor</th>
+                <th>MAC Address</th>
+                <th>First Seen</th>
+                <th>Last Seen</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="devices-tbody">
+            <!-- Populated dynamically via devices.js fetching /api/devices -->
+            <tr class="placeholder-row">
+                <td colspan="7" class="text-center">Loading network devices...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/devices.js') }}"></script>
+{% endblock %}

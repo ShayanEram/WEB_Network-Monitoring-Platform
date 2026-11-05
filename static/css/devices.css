@@ -1,0 +1,21 @@
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-wrapper input {
+  width: 300px;
+}
+
+.status-badge {
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.status-badge.online {
+  color: #16a34a;
+}
+.status-badge.offline {
+  color: #dc2626;
+}

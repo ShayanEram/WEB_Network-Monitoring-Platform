@@ -8,6 +8,7 @@ export default [
       globals: {
         ...globals.browser, // Allows window, document, fetch, etc.
         ...globals.jquery,  // Allows $ symbol if you use jQuery templates
+        Chart: 'readonly',  // Tells ESLint that Chart.js is globally available
       },
     },
     rules: {

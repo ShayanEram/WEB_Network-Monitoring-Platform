@@ -1,0 +1,69 @@
+{% extends "_base.html" %}
+
+<!-- Title ----------------------------------------------------------------------->
+{% block title %}Alerts - Network Monitor{% endblock %}
+
+<!-- Header ---------------------------------------------------------------------->
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/alerts.css') }}">
+{% endblock %}
+
+<!-- Body ------------------------------------------------------------------------>
+{% block content_body %}
+
+<div class="page-header">
+    <div class="header-title">
+        <h1>Security Alerts & Anomalies</h1>
+        <p class="subtitle">Review security warnings, traffic spikes, and detected network anomalies.</p>
+    </div>
+    <div class="header-actions">
+        <button id="acknowledge-all-btn" class="btn btn-secondary">Acknowledge All</button>
+        <button id="clear-alerts-btn" class="btn btn-danger-outline">Clear History</button>
+    </div>
+</div>
+
+<!-- Summary Metrics Row -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Total Alerts</span>
+        <h2 id="stat-total-alerts">--</h2>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Critical / High</span>
+        <h2 id="stat-critical-alerts" class="text-danger">--</h2>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Unacknowledged</span>
+        <h2 id="stat-unack-alerts">--</h2>
+    </div>
+</div>
+
+<!-- Filter Toolbar -->
+<div class="toolbar">
+    <div class="search-wrapper">
+        <input type="text" id="alert-search" placeholder="Search alert title or message..." autocomplete="off">
+    </div>
+    <div class="filter-wrapper">
+        <select id="severity-filter" class="form-select">
+            <option value="all">All Severities</option>
+            <option value="critical">Critical</option>
+            <option value="warning">Warning</option>
+            <option value="info">Info</option>
+        </select>
+    </div>
+</div>
+
+<!-- Alerts Feed Container -->
+<div class="alerts-feed-container" id="alerts-container">
+    <!-- Populated dynamically via alerts.js -->
+    <div class="alert-card placeholder-card">
+        <p class="text-center">Loading security alerts...</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
+{% endblock %}

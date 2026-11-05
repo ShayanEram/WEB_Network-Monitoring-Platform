@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+
+<!-- Title ----------------------------------------------------------------------->
+{% block title %}About - Network Monitor{% endblock %}
+
+<!-- Header ---------------------------------------------------------------------->
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+<!-- Body ------------------------------------------------------------------------>
+{% block content_body %}
+
+<div class="page-header">
+    <div class="header-title">
+        <h1>About</h1>
+        <p class="subtitle">Platform architecture and system information.</p>
+    </div>
+</div>
+
+<div class="about-card">
+    <h3>Network Monitoring Platform</h3>
+    <p>Made by Shayan Eram</p>
+    <p>Version {{ version }}</p>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Empty -->
+{% endblock %}

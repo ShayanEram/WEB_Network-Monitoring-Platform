@@ -27,15 +27,20 @@ class TrafficLog:
         conn.close()
         return {row["protocol"]: row["count"] for row in rows} if rows else {}
 
-    def get_packet_total():
-        pass
-
-    def get_top_talkers():
-        return [
-            {"ip": "192.168.1.10", "packets": 4210},
-            {"ip": "192.168.1.15", "packets": 3175},
-            {"ip": "192.168.1.20", "packets": 1440},
-        ]
+    def get_recent_logs(limit=100):
+        """Fetches recent packet logs for the traffic interface table"""
+        conn = get_db_connection()
+        logs = conn.execute(
+            """
+            SELECT timestamp, source_ip, destination_ip, packet_size, protocol 
+            FROM traffic_logs 
+            ORDER BY id DESC 
+            LIMIT ?
+            """,
+            (limit,),
+        ).fetchall()
+        conn.close()
+        return [dict(log) for log in logs]
 
     def get_dashboard_stats():
         conn = get_db_connection()

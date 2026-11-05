@@ -13,8 +13,9 @@ CREATE TABLE IF NOT EXISTS traffic_logs (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS alerts (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
     message TEXT,
-    created_at DATETIME
+    severity TEXT DEFAULT 'info',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

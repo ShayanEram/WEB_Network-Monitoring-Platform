@@ -1,0 +1,81 @@
+{% extends "_base.html" %}
+
+<!-- Title ----------------------------------------------------------------------->
+{% block title %}Traffic - Network Monitor{% endblock %}
+
+<!-- Header ---------------------------------------------------------------------->
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/traffic.css') }}">
+{% endblock %}
+
+<!-- Body ------------------------------------------------------------------------>
+{% block content_body %}
+
+<div class="page-header">
+    <div class="header-title">
+        <h1>Traffic Logs & Packet Stream</h1>
+        <p class="subtitle">Inspect real-time packet headers, protocols, and data payloads captured by the engine.</p>
+    </div>
+    <div class="header-actions">
+        <button id="toggle-stream-btn" class="btn btn-secondary active">Pause Stream</button>
+        <button id="clear-logs-btn" class="btn btn-danger-outline">Clear View</button>
+    </div>
+</div>
+
+<!-- Advanced Filter Toolbar -->
+<div class="toolbar">
+    <div class="filter-group">
+        <input type="text" id="filter-src-ip" placeholder="Filter Source IP..." autocomplete="off">
+    </div>
+    <div class="filter-group">
+        <input type="text" id="filter-dest-ip" placeholder="Filter Dest IP..." autocomplete="off">
+    </div>
+    <div class="filter-group">
+        <select id="filter-protocol" class="form-select">
+            <option value="">All Protocols</option>
+            <option value="TCP">TCP</option>
+            <option value="UDP">UDP</option>
+            <option value="ICMP">ICMP</option>
+            <option value="DNS">DNS</option>
+        </select>
+    </div>
+    <div class="filter-actions">
+        <button id="apply-filters-btn" class="btn btn-primary">Apply Filters</button>
+        <button id="reset-filters-btn" class="btn btn-text">Reset</button>
+    </div>
+</div>
+
+<!-- Packet Log Data Table Card -->
+<div class="table-card">
+    <table class="data-table" id="traffic-table">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Source IP</th>
+                <th>Destination IP</th>
+                <th>Protocol</th>
+                <th>Packet Size</th>
+            </tr>
+        </thead>
+        <tbody id="traffic-tbody">
+            <!-- Populated dynamically via traffic.js -->
+            <tr class="placeholder-row">
+                <td colspan="5" class="text-center">Listening for network packets...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Optional Pagination Controls -->
+<div class="pagination-container" id="pagination-controls">
+    <button class="btn btn-secondary" id="prev-page" disabled>&larr; Newer</button>
+    <span id="page-indicator">Page 1 of 1</span>
+    <button class="btn btn-secondary" id="next-page" disabled>Older &rarr;</button>
+</div>
+    
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/traffic.js') }}"></script>
+{% endblock %}

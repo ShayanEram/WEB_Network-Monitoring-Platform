@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- File heading ---------------------------------------------------------------->
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Network Monitor{% endblock %}</title>
+
+        <!-- Base Styling -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/_base.css') }}">
+        
+        <!-- Page-Specific CSS -->
+        {% block extra_css %}{% endblock %}
+
+</head>
+<!-- Body -------------------------------------------------------------------------->
+<body>  
+        <!-- Top Header Navigation Bar -->
+        <header class="top-navbar">
+                <div class="nav-brand">
+                <h2>Network Monitor</h2>
+                </div>
+                <nav class="nav-links">
+                <a href="/">Dashboard</a>
+                <a href="/devices">Devices</a>
+                <a href="/traffic">Traffic Logs</a>
+                <a href="/alerts">Alerts</a>
+                <a href="/about">About</a>
+                </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="content">
+                <main>
+                        {% block content_body %}{% endblock %}
+                </main>
+        
+                <footer>
+                        <p>&copy; 2026 Network Monitoring Platform</p>
+                </footer>
+        </div>
+
+        <!-- Page-Specific JS -->
+        {% block extra_js %}{% endblock %}
+</body>
+
+</html>

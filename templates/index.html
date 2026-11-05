@@ -1,60 +1,120 @@
-<!DOCTYPE html>
-<html>
-<!-- File heading ---------------------------------------------------------------->
-<head>
-    <title>Network Monitor</title>
+{% extends "_base.html" %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<!-- Body -------------------------------------------------------------------------->
-<body>
+<!-- Title ----------------------------------------------------------------------->
+{% block title %}Index - Network Monitor{% endblock %}
 
-<header>
-    <h1>Network Monitor</h1>
-</header>
+<!-- Header ---------------------------------------------------------------------->
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    
+    <!-- Include Chart.js CDN for rendering graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
 
-<main>
+<!-- Body ------------------------------------------------------------------------>
+{% block content_body %}
 
-    <div id="packets"></div>
-    <div id="devices-count"></div>
-    <div id="protocol"></div>
+<div class="page-header">
+    <div class="header-title">
+        <h1>Network Overview</h1>
+        <p class="subtitle">Real-time telemetry, bandwidth usage, and command center telemetry.</p>
+    </div>
+    <div class="header-actions">
+        <span class="live-indicator"><span class="dot"></span> Live Feed Active</span>
+    </div>
+</div>
 
-    <section id="stats">
-        <!-- Cards -->
-    </section>
+<!-- Top Stats Row (Bento Grid Metric Cards) -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Total Packets</span>
+        <h2 id="stat-packets">--</h2>
+        <span class="stat-trend positive">Live Counter</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Active Devices</span>
+        <h2 id="stat-devices">--</h2>
+        <span class="stat-trend">Online endpoints</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Total Bandwidth</span>
+        <h2 id="stat-bandwidth">--</h2>
+        <span class="stat-trend">Aggregated payload</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Top Protocol</span>
+        <h2 id="stat-protocol">--</h2>
+        <span class="stat-trend">Most frequent type</span>
+    </div>
+</div>
 
-    <section id="protocol-chart">
-        <!-- Pie Chart -->
-    </section>
+<!-- Middle Split Grid: Chart Containers -->
+<div class="charts-grid">
+    <div class="chart-card">
+        <div class="card-header">
+            <h3>Traffic Volume Over Time</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="trafficVolumeChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-card">
+        <div class="card-header">
+            <h3>Protocol Distribution</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="protocolDistributionChart"></canvas>
+        </div>
+    </div>
+</div>
 
-    <section id="traffic-chart">
-        <!-- Line Chart -->
-    </section>
+<!-- Bottom Section: Quick Preview Tables -->
+<div class="dashboard-bottom-grid">
+    <div class="panel-card">
+        <div class="card-header">
+            <h3>Recent Security Alerts</h3>
+            <a href="/alerts" class="view-all-link">View All &rarr;</a>
+        </div>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Severity</th>
+                        <th>Title</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-alerts-tbody">
+                    <tr><td colspan="3" class="text-center">Loading alerts...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="panel-card">
+        <div class="card-header">
+            <h3>Top Active Devices</h3>
+            <a href="/devices" class="view-all-link">View All &rarr;</a>
+        </div>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>IP Address</th>
+                        <th>Hostname</th>
+                        <th>Last Seen</th>
+                    </tr>
+                </thead>
+                <tbody id="top-devices-tbody">
+                    <tr><td colspan="3" class="text-center">Loading devices...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-    <section id="devices">
-        <!-- Table -->
-    </section>
+{% endblock %}
 
-    <section id="alerts">
-        <!-- Alert Feed -->
-    </section>
-
-    <table id="device-table">
-    <thead>
-        <tr>
-            <th>IP</th>
-            <th>Hostname</th>
-            <th>Last Seen</th>
-        </tr>
-    </thead>
-
-    <tbody></tbody>
-</table>
-
-</main>
-
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-
-</body>
-</html>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
