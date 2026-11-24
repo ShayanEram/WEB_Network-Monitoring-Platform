@@ -2,7 +2,6 @@ from database.databaseHelper import get_db_connection
 
 
 class AlertLog:
-
     @staticmethod
     def get_all_alerts(severity="all"):
         conn = get_db_connection()

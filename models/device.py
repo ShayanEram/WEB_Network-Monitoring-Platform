@@ -2,7 +2,6 @@ from database.databaseHelper import get_db_connection
 
 
 class DeviceLog:
-
     @staticmethod
     def get_all_devices():
         conn = get_db_connection()

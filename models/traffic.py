@@ -2,7 +2,6 @@ from database.databaseHelper import get_db_connection
 
 
 class TrafficLog:
-
     @staticmethod
     def insert_packet(source_ip, destination_ip, packet_size, protocol):
         conn = get_db_connection()
