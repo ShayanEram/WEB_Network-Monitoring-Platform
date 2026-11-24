@@ -2,9 +2,8 @@ from database.databaseHelper import get_db_connection
 
 
 class TrafficLog:
-    def __init__(self):
-        pass
 
+    @staticmethod
     def insert_packet(source_ip, destination_ip, packet_size, protocol):
         conn = get_db_connection()
         conn.execute(
@@ -17,6 +16,7 @@ class TrafficLog:
         conn.commit()
         conn.close()
 
+    @staticmethod
     def get_protocol_counts():
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -27,6 +27,7 @@ class TrafficLog:
         conn.close()
         return {row["protocol"]: row["count"] for row in rows} if rows else {}
 
+    @staticmethod
     def get_recent_logs(limit=100):
         """Fetches recent packet logs for the traffic interface table"""
         conn = get_db_connection()
@@ -42,6 +43,7 @@ class TrafficLog:
         conn.close()
         return [dict(log) for log in logs]
 
+    @staticmethod
     def get_dashboard_stats():
         conn = get_db_connection()
         cursor = conn.cursor()

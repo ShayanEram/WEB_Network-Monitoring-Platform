@@ -2,9 +2,8 @@ from database.databaseHelper import get_db_connection
 
 
 class AlertLog:
-    def __init__(self):
-        pass
 
+    @staticmethod
     def get_all_alerts(severity="all"):
         conn = get_db_connection()
         if severity and severity != "all":
@@ -19,6 +18,7 @@ class AlertLog:
         conn.close()
         return [dict(a) for a in alerts]
 
+    @staticmethod
     def add_alert(title, message, severity="info"):
         conn = get_db_connection()
         conn.execute(
@@ -31,6 +31,7 @@ class AlertLog:
         conn.commit()
         conn.close()
 
+    @staticmethod
     def seed_dummy_alerts():
         conn = get_db_connection()
         dummy_alerts = [

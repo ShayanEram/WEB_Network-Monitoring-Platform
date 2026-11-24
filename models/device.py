@@ -2,9 +2,8 @@ from database.databaseHelper import get_db_connection
 
 
 class DeviceLog:
-    def __init__(self):
-        pass
 
+    @staticmethod
     def get_all_devices():
         conn = get_db_connection()
         devices = conn.execute(
@@ -13,6 +12,7 @@ class DeviceLog:
         conn.close()
         return [dict(d) for d in devices]
 
+    @staticmethod
     def add_device(ip, hostname):
         conn = get_db_connection()
         conn.execute(
@@ -26,6 +26,7 @@ class DeviceLog:
         conn.commit()
         conn.close()
 
+    @staticmethod
     def update_last_seen(ip):
         conn = get_db_connection()
         conn.execute(
